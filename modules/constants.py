@@ -1,3 +1,3 @@
-MAIN_PATH = "C:/Users/Pichau/Music/Downloads"
-LINK_PATH = "C:/Users/Pichau/Music/Downloads/links.txt"
+MAIN_PATH = "C:/Music"
+LINK_PATH = "C:/Music/links.txt"
 FILES_EXT = ".mp4"
