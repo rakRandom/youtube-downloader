@@ -160,5 +160,5 @@ cython_debug/
 #.idea/
 
 # Downloaded files
-.mp4
-.mp3
+*.mp4
+*.mp3
