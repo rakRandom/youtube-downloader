@@ -1,0 +1,4 @@
+# - write here the videos url
+# - save the file to start
+# - already downloaded audios will not be downloaded again
+# - '#' character is used to write comment lines, always as the first character
