@@ -41,14 +41,13 @@ class Main:
             return name_list
 
 
-    def __download_audio(self, name_list: tuple) -> None:
+    def __download_audio(self, name_list: tuple, *, only_audio=True) -> None:
         for name in name_list:
             yt = YouTube(name)
-            audio = yt.streams.filter(only_audio = True).first()
-
             try:
                 # log downloading
                 print(f"log: downloading \"{yt.title}\"")
+                audio = yt.streams.filter(only_audio=only_audio).first()
                 audio.download(MAIN_PATH)
             except Exception as e:
                 #log erro 'e'
