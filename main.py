@@ -7,13 +7,12 @@ except ImportError:
     raise ImportError("Error: pytube module was not found")
 
 
-MAIN_PATH = "downloaded"
-LINK_PATH = "links.txt"
-FILES_EXT = ".mp4"
-
+MAIN_PATH = "downloaded"  # Folder where the .mp4 will be after downloaded
+LINK_PATH = "links.txt"   # Text file where will be the youtube links
+WAIT_TIME = 60
 
 class Main:
-    def __get_name_list(self) -> tuple:
+    def __get_name_list(self) -> tuple[str]:
         downloaded_files_names: list | set
         download_links: list | set
         name_list: tuple
@@ -22,7 +21,7 @@ class Main:
         downloaded_files_names = [
             file_name[:-4] 
             for file_name in os.listdir(MAIN_PATH) 
-                if file_name[-4:] == FILES_EXT
+                if file_name[-4:] == ".mp4"
         ]
         
         #
@@ -49,22 +48,27 @@ class Main:
         finally:
             return name_list
 
+    def __download_audio(self, name_list: tuple[str]) -> None:
+        only_audio: bool
 
-    def __download_audio(self, name_list: tuple, *, only_audio=True) -> None:
         for name in name_list:
+            # Testing if it should be downloaded with or without video
+            if name[0] == "$":
+                only_audio = False
+                name = name.split(' ')[1]
+            else:
+                only_audio = True
+            
+            # Trying to download
             yt = YouTube(name)
             try:
-                # log downloading
                 print(f"log: downloading \"{yt.title}\"")
                 audio = yt.streams.filter(only_audio=only_audio).first()
-                audio.download(MAIN_PATH)
-            except Exception as e:
-                #log erro 'e'
+                audio.download(MAIN_PATH, yt.title.lower().replace(' ', '-'))
+            except:
                 print("log: was not possible download")
             else:
-                #log sucesso
                 print("log: audio download was successful")
-
 
     def verify_to_download(self):
         # obtendo a data da ultima modificação do arquivo
@@ -72,6 +76,8 @@ class Main:
         self.__download_audio(self.__get_name_list())
 
         while True:
+            print("log: iterating")
+            
             # obtendo a data de modificação mais recente do arquivo
             newest_modification = os.path.getmtime(LINK_PATH)
 
@@ -81,4 +87,4 @@ class Main:
                 last_modification = newest_modification
 
             # tempo de espera até verificar novamente
-            time.sleep(1)
+            time.sleep(WAIT_TIME)
