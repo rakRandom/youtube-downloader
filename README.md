@@ -9,7 +9,7 @@ My motivation started when I didn't even knew what programming was (a.k.a. a lon
 
 <br>
 
-## What you need to run
+## What you need
 - Python 3.12
 - The hability to use the terminal
 - Windows? idk, probably you can execute with Linux or MacOS
@@ -17,7 +17,7 @@ My motivation started when I didn't even knew what programming was (a.k.a. a lon
 
 <br>
 
-## What you don't need to run
+## What you don't need
 - A Virtual Environment, if you don't want to
 - JDK, probably
 
