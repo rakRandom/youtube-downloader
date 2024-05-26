@@ -11,7 +11,7 @@ My motivation started when I didn't even knew what programming was (a.k.a. a lon
 
 ## What you need to run
 - Python 3.12
-- The hability to execute `pip install -r requirements.txt` at the terminal
+- The hability to use the terminal
 - Windows? idk, probably you can execute with Linux or MacOS
 - motivation, I guess
 
