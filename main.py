@@ -34,7 +34,7 @@ class Main:
             ]
 
         try:
-            # se o arquivo não foi baixado antes, e se não for um comentário (começar com '#')
+            # If the file was not downloaded before, and if it isn't a comment
             name_list = filter(lambda link: YouTube(link).title not in downloaded_files_names, download_links)
             name_list = tuple(set(name_list))
         except:
@@ -71,20 +71,20 @@ class Main:
                 print("log: audio download was successful")
 
     def verify_to_download(self):
-        # obtendo a data da ultima modificação do arquivo
+        # Getting the last modification date of the link file
         last_modification = os.path.getmtime(LINK_PATH)
         self.__download_audio(self.__get_name_list())
 
         while True:
             print("log: iterating")
 
-            # obtendo a data de modificação mais recente do arquivo
+            # Getting the last modification date of the link file, again
             newest_modification = os.path.getmtime(LINK_PATH)
 
-            # verificando se a data de modificação mudou
+            # Checking if the date has changed
             if newest_modification != last_modification:
                 self.__download_audio(self.__get_name_list())
                 last_modification = newest_modification
 
-            # tempo de espera até verificar novamente
+            # Waiting until next iteration
             time.sleep(WAIT_TIME)
