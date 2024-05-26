@@ -7,8 +7,8 @@ except ImportError:
     raise ImportError("Error: pytube module was not found")
 
 
-MAIN_PATH = "downloaded"  # Folder where the .mp4 will be after downloaded
-LINK_PATH = "links.txt"   # Text file where will be the youtube links
+MAIN_PATH = "download"   # Folder where the .mp4 will be after downloaded
+LINK_PATH = "links.txt"  # Text file where will be the youtube links
 WAIT_TIME = 60
 
 class Main:
