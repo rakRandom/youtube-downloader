@@ -1,16 +1,14 @@
 import os
 import time
 
-if __name__ == "__main__":
-    os.system("pip install -r requirements.txt")
-    os.system("cls")
-else:
+try:
     from pytube import YouTube
-
+except ImportError:
+    raise ImportError("Error: pytube module was not found")
 
 
 MAIN_PATH = "downloaded"
-LINK_PATH = "downloaded/links.txt"
+LINK_PATH = "links.txt"
 FILES_EXT = ".mp4"
 
 
