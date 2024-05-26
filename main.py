@@ -64,7 +64,7 @@ class Main:
             try:
                 print(f"log: downloading \"{yt.title}\"")
                 audio = yt.streams.filter(only_audio=only_audio).first()
-                audio.download(MAIN_PATH, yt.title.lower().replace(' ', '-'))
+                audio.download(MAIN_PATH, f"{yt.title.lower().replace(' ', '-')}.mp4")
             except:
                 print("log: was not possible download")
             else:
@@ -77,7 +77,7 @@ class Main:
 
         while True:
             print("log: iterating")
-            
+
             # obtendo a data de modificação mais recente do arquivo
             newest_modification = os.path.getmtime(LINK_PATH)
 
