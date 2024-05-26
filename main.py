@@ -1,6 +1,17 @@
-from modules.imports import *
-from modules.constants import *
+import os
+import time
 
+if __name__ == "__main__":
+    os.system("pip install -r requirements.txt")
+    os.system("cls")
+else:
+    from pytube import YouTube
+
+
+
+MAIN_PATH = "downloaded"
+LINK_PATH = "downloaded/links.txt"
+FILES_EXT = ".mp4"
 
 
 class Main:
