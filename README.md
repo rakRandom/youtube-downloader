@@ -56,3 +56,11 @@ python run.py
 Before all this, just paste all your links at the `links.txt` and have fun listening to your musics.
 
 > Note:  If you have Python 3 and 2 installed, use `pip3` and `python3` instead of `pip` and `python`
+
+<br>
+
+## Some features that this project may need
+- GUI
+- Batch/Automation file to prepare the project to run
+- README section teaching how to execute the script when the PC starts
+- ...
