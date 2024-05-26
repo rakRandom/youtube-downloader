@@ -12,6 +12,9 @@ LINK_PATH = "links.txt"  # Text file where will be the youtube links
 WAIT_TIME = 60
 
 class Main:
+    def __format_youtube_title(original_title: str) -> str:
+        return '-'.join(original_title.lower().split())
+
     def __get_name_list(self) -> tuple[str]:
         downloaded_files_names: list | set
         download_links: list | set
@@ -35,7 +38,11 @@ class Main:
 
         try:
             # If the file was not downloaded before, and if it isn't a comment
-            name_list = filter(lambda link: YouTube(link).title not in downloaded_files_names, download_links)
+            name_list = filter(
+                lambda link: self.__format_youtube_title(YouTube(link).title) not in downloaded_files_names, 
+                download_links
+            )
+
             name_list = tuple(set(name_list))
         except:
             print("log: cannot get name list")
@@ -64,7 +71,7 @@ class Main:
             try:
                 print(f"log: downloading \"{yt.title}\"")
                 audio = yt.streams.filter(only_audio=only_audio).first()
-                audio.download(MAIN_PATH, f"{yt.title.lower().replace(' ', '-')}.mp4")
+                audio.download(MAIN_PATH, f"{self.__format_youtube_title(yt.title)}.mp4")
             except:
                 print("log: was not possible download")
             else:
