@@ -1,4 +1,4 @@
-# Auto Music Downloader
+# Youtube Downloader
 
 > "Some awesome quote!" - A wise man
 
@@ -10,16 +10,9 @@ My motivation started when I didn't even knew what programming was (a.k.a. a lon
 <br>
 
 ## What you need
-- Python 3.12
-- The hability to use the terminal
-- Windows? idk, probably you can execute with Linux or MacOS
-- motivation, I guess
-
-<br>
-
-## What you don't need
-- A Virtual Environment, if you don't want to
-- JDK, probably
+- Python (3.12)
+- Pip (23 or latest)
+- Pytube (latest)
 
 <br>
 
@@ -56,6 +49,11 @@ python run.py
 Before all this, just paste all your links at the `links.txt` and have fun listening to your musics.
 
 > Note:  If you have Python 3 and 2 installed, use `pip3` and `python3` instead of `pip` and `python`
+
+<br>
+
+## Warning
+As the Youtube API updates, the Pytube module needs to update too. This can lead to periods where this project is unusable without proper manual fix.
 
 <br>
 
