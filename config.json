@@ -1,5 +1,5 @@
 {
-    "main_path": "downloaded",
+    "main_path": "download",
     "link_path": "links.txt",
     "wait_time": 60
 }
