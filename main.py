@@ -1,16 +1,20 @@
 import os
 import time
 
+
 try:
     from pytubefix import YouTube
     from pytubefix import exceptions
     from pytubefix import Stream
 except ImportError:
-    raise ImportError("Error: pytube module was not found")
+    print("Error: pytube module was not found")
+    exit()
 
-MAIN_PATH = "downloaded"  # Folder where the .mp4 will be after downloaded
-LINK_PATH = "links.txt"   # Text file where will be the youtube links
-WAIT_TIME = 60
+try:
+    from config import main_path, link_path, wait_time
+except:
+    print("Error: could not load configuration variables")
+    exit()
 
 
 class Main:
@@ -22,12 +26,12 @@ class Main:
         #
         downloaded_files_names = [
             file_name[:-4] 
-            for file_name in os.listdir(MAIN_PATH) 
+            for file_name in os.listdir(main_path) 
                 if file_name[-4:] == ".mp4"
         ]
         
         #
-        with open(LINK_PATH, 'r') as file: 
+        with open(link_path, 'r') as file: 
             download_links = [
                 link 
                 for link in file.read().split('\n')
@@ -81,7 +85,7 @@ class Main:
             print(f"log: downloading \"{yt.title}\"")
             
             try:
-                stream.download(MAIN_PATH, f"{yt.title}.mp4")
+                stream.download(main_path, f"{yt.title}.mp4")
             except exceptions.AgeRestrictedError:
                 print("log: this video has age restriction")
                 return
@@ -92,14 +96,14 @@ class Main:
 
     def verify_to_download(self):
         # Getting the last modification date of the link file
-        last_modification = os.path.getmtime(LINK_PATH)
+        last_modification = os.path.getmtime(link_path)
         self.__download_audio(self.__get_name_list())
 
         while True:
             print("log: iterating")
 
             # Getting the last modification date of the link file, again
-            newest_modification = os.path.getmtime(LINK_PATH)
+            newest_modification = os.path.getmtime(link_path)
 
             # Checking if the date has changed
             if newest_modification != last_modification:
@@ -107,4 +111,4 @@ class Main:
                 last_modification = newest_modification
 
             # Waiting until next iteration
-            time.sleep(WAIT_TIME)
+            time.sleep(wait_time)
