@@ -1,6 +1,7 @@
-import os
-import time
+""" Main file
 
+Have the main part of the code
+"""
 
 try:
     from pytubefix import YouTube
@@ -11,14 +12,20 @@ except ImportError:
     exit()
 
 try:
-    from config import main_path, link_path, wait_time
+    from converter import mp3tomp4
 except:
-    print("Error: could not load configuration variables")
+    print("Error: could not import essential modules")
     exit()
+
+import os
 
 
 class Main:
-    def __get_name_list(self) -> tuple[str]:
+    def __init__(self, main_path: str, link_path: str):
+        self.main_path = main_path
+        self.link_path = link_path
+    
+    def get_name_list(self) -> tuple[str]:
         downloaded_files_names: list | set
         download_links: list | set
         name_list: tuple
@@ -26,12 +33,12 @@ class Main:
         #
         downloaded_files_names = [
             file_name[:-4] 
-            for file_name in os.listdir(main_path) 
-                if file_name[-4:] == ".mp4"
+            for file_name in os.listdir(self.main_path) 
+                if file_name[-4:] == ".mp4" or file_name[-4:] == ".mp3"
         ]
         
         #
-        with open(link_path, 'r') as file: 
+        with open(self.link_path, 'r') as file: 
             download_links = [
                 link 
                 for link in file.read().split('\n')
@@ -54,7 +61,7 @@ class Main:
         finally:
             return name_list
 
-    def __download_audio(self, name_list: tuple[str]) -> None:
+    def download_audio(self, name_list: tuple[str]) -> None:
         only_audio: bool
 
         for name in name_list:
@@ -85,7 +92,9 @@ class Main:
             print(f"log: downloading \"{yt.title}\"")
             
             try:
-                stream.download(main_path, f"{yt.title}.mp4")
+                stream.download(self.main_path, f"{yt.title}.mp4")
+                if only_audio is True:
+                    mp3tomp4(yt.title, "", yt.author, "")
             except exceptions.AgeRestrictedError:
                 print("log: this video has age restriction")
                 return
@@ -93,22 +102,3 @@ class Main:
                 print("log: was not possible the download")
             else:
                 print("log: the download was successful")
-
-    def verify_to_download(self):
-        # Getting the last modification date of the link file
-        last_modification = os.path.getmtime(link_path)
-        self.__download_audio(self.__get_name_list())
-
-        while True:
-            print("log: iterating")
-
-            # Getting the last modification date of the link file, again
-            newest_modification = os.path.getmtime(link_path)
-
-            # Checking if the date has changed
-            if newest_modification != last_modification:
-                self.__download_audio(self.__get_name_list())
-                last_modification = newest_modification
-
-            # Waiting until next iteration
-            time.sleep(wait_time)
