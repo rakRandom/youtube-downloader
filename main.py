@@ -2,19 +2,18 @@ import os
 import time
 
 try:
-    from pytube import YouTube
+    from pytubefix import YouTube
+    from pytubefix import exceptions
+    from pytubefix import Stream
 except ImportError:
     raise ImportError("Error: pytube module was not found")
 
-
-MAIN_PATH = "download"   # Folder where the .mp4 will be after downloaded
-LINK_PATH = "links.txt"  # Text file where will be the youtube links
+MAIN_PATH = "downloaded"  # Folder where the .mp4 will be after downloaded
+LINK_PATH = "links.txt"   # Text file where will be the youtube links
 WAIT_TIME = 60
 
-class Main:
-    def __format_youtube_title(original_title: str) -> str:
-        return '-'.join(original_title.lower().split())
 
+class Main:
     def __get_name_list(self) -> tuple[str]:
         downloaded_files_names: list | set
         download_links: list | set
@@ -38,11 +37,7 @@ class Main:
 
         try:
             # If the file was not downloaded before, and if it isn't a comment
-            name_list = filter(
-                lambda link: self.__format_youtube_title(YouTube(link).title) not in downloaded_files_names, 
-                download_links
-            )
-
+            name_list = filter(lambda link: YouTube(link).title not in downloaded_files_names, download_links)
             name_list = tuple(set(name_list))
         except:
             print("log: cannot get name list")
@@ -66,16 +61,34 @@ class Main:
             else:
                 only_audio = True
             
-            # Trying to download
             yt = YouTube(name)
+
+            # Getting the streams
+            streams = yt.streams.filter(only_audio=only_audio)
+            stream: Stream | None
+            
+            # Getting one stream
+            stream = streams.get_highest_resolution()
+            if stream is None:
+                print("log: could not get the highest resolution video")
+                stream = streams.first()
+
+            if stream is None:
+                print("log: could not get any video resolution")
+                return
+            
+            # Trying to download
+            print(f"log: downloading \"{yt.title}\"")
+            
             try:
-                print(f"log: downloading \"{yt.title}\"")
-                audio = yt.streams.filter(only_audio=only_audio).first()
-                audio.download(MAIN_PATH, f"{self.__format_youtube_title(yt.title)}.mp4")
+                stream.download(MAIN_PATH, f"{yt.title}.mp4")
+            except exceptions.AgeRestrictedError:
+                print("log: this video has age restriction")
+                return
             except:
-                print("log: was not possible download")
+                print("log: was not possible the download")
             else:
-                print("log: audio download was successful")
+                print("log: the download was successful")
 
     def verify_to_download(self):
         # Getting the last modification date of the link file
