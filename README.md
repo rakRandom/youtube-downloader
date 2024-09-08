@@ -5,19 +5,18 @@
 <br>
 
 ## Why I created this?
-My motivation started when I didn't even knew what programming was (a.k.a. a long time ago), and I wanted to listen music but I didn't have internet at the time. So why didn't I just download from a generic YouTube .mp3 downloader? Well, I used to use these generic downloaders, but they have lots of ads (and probably lots of virus), so I promissed myself that I would do one myself.
+My motivation started when I didn't even knew what programming was (a.k.a. a long time ago), and I wanted to listen music but I didn't have internet at the time. So why didn't I just download from a generic YouTube .mp3 downloader? Well, I used to use these generic downloaders, but they have lots of ads (and probably lots of virus), so I promised myself that one day I would do one by myself, and that day has come.
 
 <br>
 
 ## What you need
 - Python (3.12)
 - Pip (23 or latest)
-- Pytube (latest)
 
 <br>
 
 ## What features this have
-You can download .mp4 files from YouTube, with or without video, just pasting the link of the video (or writing it, if you are some sort of psychopath) at `links.txt` file and waiting from 0 to 60 seconds.
+You can download .mp4 files from YouTube, with or without video, just pasting the link of the video (or writing it, if you are some sort of psychopath) at `links.txt` file and waiting at maximum 60 seconds, but it can be changed in the config.json file (todo).
 
 `links.txt` looks like this, as you can see:
 ```text
