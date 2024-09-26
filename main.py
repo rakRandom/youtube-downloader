@@ -4,12 +4,17 @@ Have the main part of the code
 """
 
 try:
-    from pytubefix import YouTube
-    from pytubefix import exceptions
-    from pytubefix import Stream
+    from pytube import YouTube
+    from pytube import exceptions
+    from pytube import Stream
 except ImportError:
-    print("Error: pytube module was not found")
-    exit()
+    try:
+        from pytubefix import YouTube
+        from pytubefix import exceptions
+        from pytubefix import Stream
+    except ImportError:
+        print("Error: pytube module was not found")
+        exit()
 
 try:
     from converter import mp3tomp4
